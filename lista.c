@@ -70,18 +70,18 @@ return NULL;
 
 ElemLista * LIS_retira_elemento (ElemLista * lst, (void *) valor) {
 ElemLista * ponteiro = LIS_busca(lst, valor);
-/*checa se elemento est· na lista*/
+/*checa se elemento estÔøΩ na lista*/
 if (ponteiro == NULL)
 return lst;
-/*testa se È o primeiro*/
+/*testa se ÔøΩ o primeiro*/
 if (lst == ponteiro)
 lst = ponteiro->ElemProx;
 else
 ponteiro->ElemAnt->ElemProx = ponteiro->ElemProx;
 if (ponteiro->ElemProx != NULL)
-/*testa se È o ˙ltimo*/
+/*testa se ÔøΩ o ÔøΩltimo*/
 ponteiro->ElemProx->ElemAnt = ponteiro->ElemAnt;
-/*retira elemento e libera a vari·vel de ponteiro*/
+/*retira elemento e libera a variÔøΩvel de ponteiro*/
 free (ponteiro);
 return lst;
 }
@@ -117,9 +117,45 @@ void LIS_ir_inicio (CabLista * lst) {
 lst->ElemCorrente = lst->OrigemLista;
 }
 
+void LIS_ir_dir (CabLista * lst) { /*Ir Direita ??*/
+
+lst->ElemCorrente = lst->ElemCorrente->ElemProx;
+
+}
+
+void LIS_ir_esq (CabLista * lst) { /*Ir Esquerda ??*/
+
+lst->ElemCorrente = lst->ElemCorrente->ElemAnt;
+
+}
 
 void * LIS_obter_valor (CabLista * lst) {
 if (lst->ElemCorrente == NULL) 
 return NULL;
 return lst->ElemCorrente->valor;
+}
+
+/* incompleto */
+void LIS_excluir_elemento (CabLista * lst) {
+
+ElemLista * pElem;
+
+pElem = lst->ElemCorrente;
+
+if (pElem->ElemAnt != NULL) {
+  pElem->ElemAnt->ElemProx = pElem->ElemProx;
+	lst->ElemCorrente = pElem->ElemAnt;
+}
+else {
+	lst->ElemCorrente = pElem->ElemProx;
+	lst->OrigemLista = lst->ElemCorrente;
+}
+
+if (pElem->ElemProx != NULL) 
+	pElem->ElemProx->ElemAnt = pElem->ElemAnt;
+else
+	lst->FimLista = pElem->ElemAnt;
+	
+LIS_liberar_elemento (lst, pElem); /* falta fazer a fun√ß√£o de liberar elemento*/ 
+
 }
